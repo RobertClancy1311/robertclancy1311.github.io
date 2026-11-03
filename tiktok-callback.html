@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Signing in · Done the Reading Studio</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main><div class="wrap">
+  <h1>Signing in…</h1>
+  <p id="msg">Handing your TikTok sign-in back to Done the Reading Studio on this computer.</p>
+  <p class="meta">This page only forwards the sign-in to the Studio running on your own PC (localhost). It doesn’t store or send anything anywhere else.</p>
+</div></main>
+<script>
+  // TikTok needs an https return address; the Studio runs on http://localhost, so pass the result straight on.
+  var q = location.search;
+  if (!/[?&](code|error)=/.test(q)) {
+    document.getElementById("msg").textContent = "Nothing to forward. Start the TikTok sign-in from the Studio.";
+  } else {
+    var to = "http://localhost:4317/oauth/tiktok/callback" + q;
+    document.getElementById("msg").innerHTML = 'Returning to the Studio… If nothing happens, make sure the Studio is running and <a href="' + to.replace(/"/g, "&quot;") + '">continue here</a>.';
+    location.replace(to);
+  }
+</script>
+</body>
+</html>
